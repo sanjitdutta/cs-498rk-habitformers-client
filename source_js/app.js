@@ -1,24 +1,18 @@
-var app = angular.module('mp4', ['ngRoute', 'mp4Controllers', 'mp4Services']);
+var app = angular.module('habit-formers', ['ngRoute', 'hfControllers', 'hfServices']);
 
 app.config(['$routeProvider', function($routeProvider) {
   $routeProvider.
-    when('/firstview', {
-    templateUrl: 'partials/firstview.html',
-    controller: 'FirstController'
-  }).
-  when('/secondview', {
-    templateUrl: 'partials/secondview.html',
-    controller: 'SecondController'
-  }).
+  when('/', {
+    templateUrl: 'partials/index.html',
+    controller: 'IndexController',
+    activeTab: 'index'
+  }
   when('/settings', {
     templateUrl: 'partials/settings.html',
-    controller: 'SettingsController'
-  }).
-  when('/llamalist', {
-    templateUrl: 'partials/llamalist.html',
-    controller: 'LlamaListController'
+    controller: 'SettingsController',
+    activeTab: 'settings'
   }).
   otherwise({
-    redirectTo: '/settings'
+    redirectTo: '/'
   });
 }]);

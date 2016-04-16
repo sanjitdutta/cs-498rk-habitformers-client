@@ -1,22 +1,55 @@
-var mp4Services = angular.module('mp4Services', []);
+var hfServices = angular.module('hfServices', []);
 
-mp4Services.factory('CommonData', function(){
-    var data = "";
-    return{
-        getData : function(){
-            return data;
-        },
-        setData : function(newData){
-            data = newData;
-        }
-    }
-});
+// http://weblogs.asp.net/dwahlin/using-an-angularjs-factory-to-interact-with-a-restful-service
 
-mp4Services.factory('Llamas', function($http, $window) {
-    return {
-        get : function() {
-            var baseUrl = $window.sessionStorage.baseurl;
-            return $http.get(baseUrl+'/api/llamas');
-        }
+hfServices.factory('Database', ['$http', '$window', function($http, $window) {
+    var database = {};
+
+    function baseURL() {
+        return "http://localhost:4000/api/";
+        // return $window.sessionStorage.baseurl;
     }
-});
+    
+    database.getUsers = function() {
+        return $http.get(baseURL() + "users");
+    }
+
+    database.getUser = function(id) {
+        return $http.get(baseURL() + "users/" + id);
+    }
+
+    database.addUser = function(data) {
+        return $http.post(baseURL() + "users", data);
+    }
+
+    database.updateUser = function(id, data) {
+        return $http.put(baseURL() + "users/" + id, data);
+    }
+
+    database.deleteUser = function(user) {
+        return $http.delete(baseURL() + "users/" + user._id);
+    }
+
+    database.getHabits = function() {
+        return $http.get(baseURL() + "habits");
+    }
+
+    database.getHabit = function(id) {
+        return $http.get(baseURL() + "habits/" + id);
+    }
+
+    database.addHabit = function(habit) {
+        return $http.post(baseURL() + "habits", habit);
+    }
+
+    database.updateHabit = function(habit) {
+        return $http.put(baseURL() + "habits/" + habit._id, habit);
+    }
+
+    database.deleteHabit = function(habit) {
+        return $http.delete(baseURL() + "habits/" + habit._id);
+    }
+
+    return database;
+
+}]);
