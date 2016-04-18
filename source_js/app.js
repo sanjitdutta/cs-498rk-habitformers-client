@@ -11,18 +11,18 @@ app.config(['$routeProvider', function($routeProvider) {
     templateUrl: 'partials/settings.html',
     controller: 'SettingsController',
     activeTab: 'settings'
-  }).
+  })
   .when('/statistics/:id', {
     templateUrl: 'partials/settings.html',
     controller: 'StatisticsController',
     activeTab: 'statistics'
-  }).
+  })
   .when('/weekly/:id', {
     templateUrl: 'partials/settings.html',
     controller: 'WeeklyController',
     activeTab: 'weekly'
-  }).
-  otherwise({
+  })
+  .otherwise({
     redirectTo: '/'
   });
 }]);
