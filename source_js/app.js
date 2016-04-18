@@ -1,4 +1,4 @@
-var app = angular.module('habit-formers', ['ngRoute', 'hfControllers', 'hfServices']);
+var app = angular.module('hfHabits', ['ngRoute', 'hfControllers', 'hfServices']);
 
 app.config(['$routeProvider', function($routeProvider) {
   $routeProvider
