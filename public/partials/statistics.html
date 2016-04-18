@@ -1,0 +1,34 @@
+<div>
+    <div class="row">
+        <div class="small-6 medium-6 columns"> <!-- Badges -->
+            <h2>Badges Earned</h2>
+            <div class="row" ng-repeat="badge in badges">
+                <div class="small-6 medium-6 columns"> 
+                    <!-- Badge Icon -->
+                </div>
+                <div class="small-6 medium-6 columns"> 
+                    <h6>{{badge.name}}</h6>
+                </div>
+            </div>            
+            <div id="statistics-next-badge" class="row">
+                <h5>Complete {{nextBadgeCount}} more for:</h5>
+                <!-- Bade icon -->
+                <h6>{{nextBadgeName}}</h6>
+            </div>
+        </div> <!-- End Badges -->
+        <div class="small-6 medium-6 columns"> <!-- Stats -->
+            <h2>Weekly Goals <small>{{weekRangeString}}</small></h2>
+            <div class="row">
+                <div class="statisics-day-block" ng-repeat="day in days">
+                    <div class="statistics-day-task" ng-repeat="task in day.tasks">
+                    </div>
+                    <h6>{{day.date}}</h6>
+                </div>
+            </div>
+            <div class="row">
+                <h2>Weekly Completed Habits</h2>
+                <div id="completeHabitsChart"></div>
+            </div>
+        </div> <!-- End Stats -->
+    </div>
+</div>
