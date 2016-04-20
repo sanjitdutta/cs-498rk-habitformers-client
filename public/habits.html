@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <title>MP4 Starter</title>
+    <title>Habit Formers</title>
 
     <!-- Stylesheets -->
     <link rel="stylesheet" href="./css/styles.css">
@@ -19,12 +19,28 @@
 
 <body ng-app="hfHabits">
 
-    <div class="row text-center">
-    	<a class="button" href="#/settings">Settings</a>
-    	<a class="button" href="#/llamalist">Llama List</a>
-        <a class="button" href="#/firstview">First View</a>
-        <a class="button" href="#/secondview">Second View</a>
-    </div>
+	<nav class="top-bar" ng-controller="navController">
+		<div class="top-bar-left">
+			<ul class="dropdown menu" data-dropdown-menu>
+				<li class="menu-text">Habit Formers</li>
+			</ul>
+		</div>
+		<div class="top-bar-right">
+			<ul class="dropdown menu" data-dropdown-menu>
+				<li><input type="search" placeholder="Search"></li>
+				<li><button type="button" class="button fa fa-3x fa-search"></button></li>
+				<li>
+					<a href="javascript:;">{{ user.name }}</a>
+					<ul class="menu vertical">
+						<li ng-class="{active: $route.current.activeTab == 'monthly'}"><a href="#">Monthly</a></li>
+						<li ng-class="{active: $route.current.activeTab == 'weekly'}"><a href="#">Weekly</a></li>
+						<li ng-class="{active: $route.current.activeTab == 'statistics'}"><a href="#">Awards &amp; Stats</a></li>
+						<li ng-class="{active: $route.current.activeTab == 'settings'}"><a href="#">Settings</a></li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+	</nav>
 
     <div ng-view></div>
 
@@ -34,7 +50,7 @@
     <script src="./js/script.js"></script>
     <script src="http://d3js.org/d3.v3.min.js"></script>
     <script>
-    $(document).foundation();
+    	$(document).foundation();
     </script>
     <script src="http://localhost:35729/livereload.js"></script>
 </body>

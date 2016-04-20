@@ -1,1 +1,9 @@
-// Add any custom Sass & CSS here
+nav {
+	.menu .vertical {
+		background-color: $light-gray;
+	}
+
+	.menu-text {
+		color: $white;
+	}
+}
