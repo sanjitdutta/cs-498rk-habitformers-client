@@ -52,6 +52,26 @@ nav {
 		font-size: 1.6em;
 	}
 
+	.today-button {
+		margin: 0;
+		padding: 5px;
+		border-radius: 4px;
+		background-color: lighten($black, 10%);
+
+		&:hover {
+			background-color: lighten($black, 40%);
+		}
+	}
+
+	.arrow {
+		color: $black;
+		cursor: pointer;
+	}
+
+	.arrow:hover {
+		color: lighten($black, 40%);
+	}
+
 	.create {
 		@include display();
 		margin-top: 20px;
@@ -79,6 +99,8 @@ nav {
 @for $i from 0 through 20 {
 	.color-#{$i} {
 		background-color: hsl(($i*50 % 360), 100%, 80%);
+		transition: 0.4s;
+		cursor: pointer;
 	}
 	.color-#{$i}:hover {
 		background-color: hsl(($i*50 % 360), 100%, 70%);
@@ -123,7 +145,19 @@ nav {
 		@include display;
 	}
 
-	& .dim {
+	&.dim {
+		.number {
+			background-color: lighten($black, 60%);
+		}
+	}
 
+	&.today {
+		.number {
+			background-color: hsl(33, 100%, 50%);
+		}
+	}
+
+	&.sixWeeks {
+		height: 16.6666666666666666%;
 	}
 }

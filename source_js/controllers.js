@@ -13,9 +13,11 @@ hfControllers.controller('MonthlyController', ['$scope', 'Database', function($s
 
 	$scope.habits;
 	$scope.days;
+	$scope.date = new Date();
 	$scope.month;
+	$scope.sixWeeks = false;
 
-	$scope.month = 'April 2016';
+	setMonth();
 
 	$scope.habits = [
 		{name: 'Wash my hair'},
@@ -23,46 +25,82 @@ hfControllers.controller('MonthlyController', ['$scope', 'Database', function($s
 		{name: 'Do 1,000 pull ups'}
 	];
 
-	$scope.days = [
-		{dayNum: 29, dayName: 'Sunday', past: true},
-		{dayNum: 30, dayName: 'Monday', past: true},
-		{dayNum: 31, dayName: 'Tuesday', past: true},
-		{dayNum: 1, dayName: 'Wednesday'},
-		{dayNum: 2, dayName: 'Thursday'},
-		{dayNum: 3, dayName: 'Friday'},
-		{dayNum: 4, dayName: 'Saturday'},
-		{dayNum: 5, dayName: 'Sunday',},
-		{dayNum: 6, dayName: 'Monday',},
-		{dayNum: 7, dayName: 'Tuesday',},
-		{dayNum: 8, dayName: 'Wednesday'},
-		{dayNum: 9, dayName: 'Thursday'},
-		{dayNum: 10, dayName: 'Friday', today: true},
-		{dayNum: 11, dayName: 'Saturday'},
-		{dayNum: 12, dayName: 'Sunday',},
-		{dayNum: 13, dayName: 'Monday',},
-		{dayNum: 14, dayName: 'Tuesday',},
-		{dayNum: 15, dayName: 'Wednesday'},
-		{dayNum: 16, dayName: 'Thursday'},
-		{dayNum: 17, dayName: 'Friday'},
-		{dayNum: 18, dayName: 'Saturday'},
-		{dayNum: 19, dayName: 'Sunday',},
-		{dayNum: 20, dayName: 'Monday',},
-		{dayNum: 21, dayName: 'Tuesday',},
-		{dayNum: 22, dayName: 'Wednesday'},
-		{dayNum: 23, dayName: 'Thursday'},
-		{dayNum: 24, dayName: 'Friday'},
-		{dayNum: 25, dayName: 'Saturday'},
-		{dayNum: 26, dayName: 'Sunday',},
-		{dayNum: 27, dayName: 'Monday',},
-		{dayNum: 28, dayName: 'Tuesday',},
-		{dayNum: 29, dayName: 'Wednesday'},
-		{dayNum: 30, dayName: 'Thursday'},
-		{dayNum: 31, dayName: 'Friday'},
-		{dayNum: 1, dayName: 'Saturday', future: true}
-	];
-
 	$scope.colorClass = function(index) {
 		return "color-" + index;
+	}
+
+	function setMonth() {
+		$scope.month = $scope.date.toLocaleString("en-us", { month: "long" }) + ' ' + $scope.date.getFullYear();
+		$scope.days = [];
+
+		var days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+
+		var firstDayDate = new Date($scope.date.getTime());
+		firstDayDate.setDate(1);
+		var firstDay = firstDayDate.getDay();
+		var currDay = new Date();
+		var today = new Date();
+
+		var i = 0;
+		while(i < firstDay) {
+			currDay = new Date(firstDayDate.getTime());
+			currDay.setTime(firstDayDate.getTime()-((firstDay - i)*24*3600000));
+			$scope.days.push({
+				dayNum: currDay.getDate(),
+				dayName: days[currDay.getDay()],
+				past: true
+			});
+			i++;
+		}
+
+		currDay.setTime(firstDayDate.getTime());
+		while(currDay.getMonth() == $scope.date.getMonth()) {
+			if(currDay.getDate() == today.getDate() &&
+				currDay.getMonth() == today.getMonth() &&
+				currDay.getYear() == today.getYear()) {
+				$scope.days.push({
+					dayNum: currDay.getDate(),
+					dayName: days[currDay.getDay()],
+					today: true
+				});
+			} else {
+				$scope.days.push({
+					dayNum: currDay.getDate(),
+					dayName: days[currDay.getDay()]
+				});
+			}
+			currDay.setTime(currDay.getTime()+(1*24*3600000));
+		}
+
+		while($scope.days.length % 7 != 0) {
+			$scope.days.push({
+				dayNum: currDay.getDate(),
+				dayName: days[currDay.getDay()],
+				future: true
+			});
+			currDay.setTime(currDay.getTime()+(1*24*3600000));
+		}
+
+		if(Math.round($scope.days.length / 7) > 5) {
+			$scope.sixWeeks = true;
+		} else {
+			$scope.sixWeeks = false;
+		}
+	}
+
+	$scope.prevMonth = function() {
+		$scope.date.setMonth($scope.date.getMonth() - 1);
+		setMonth();
+	}
+
+	$scope.nextMonth = function() {
+		$scope.date.setMonth($scope.date.getMonth() + 1);
+		setMonth();
+	}
+
+	$scope.currMonth = function() {
+		$scope.date = new Date();
+		setMonth();
 	}
 
 }]);
