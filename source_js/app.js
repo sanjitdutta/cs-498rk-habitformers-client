@@ -27,8 +27,20 @@ app.config(['$routeProvider', function($routeProvider) {
     controller: 'WeeklyController',
     activeTab: 'weekly'
   }).
+  when('/landing',{
+      templateUrl: 'partials/landing.html'
+
+  }).
+  when('/signup',{
+      templateUrl: 'partials/signup.html'
+
+  }).
+  when('/login',{
+      templateUrl: 'partials/login.html'
+
+  }).
   otherwise({
-    redirectTo: '/'
+    redirectTo: '/login'
   });
 }]);
 
