@@ -6,4 +6,8 @@ nav {
 	.menu-text {
 		color: $white;
 	}
+
+	.is-dropdown-submenu-parent {
+		min-width: 100px;
+	}
 }
