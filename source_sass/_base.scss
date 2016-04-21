@@ -39,3 +39,125 @@ nav {
 .no-margin {
 	max-width: 100%;
 }
+
+.sidebar {
+	border-right: 1px solid darken($light-gray, 20%);
+	text-align: center;
+	padding-top: 15px;
+	padding-left: 0;
+	padding-right: 0;
+
+	.month {
+		@include display();
+		font-size: 1.6em;
+	}
+
+	.today-button {
+		margin: 0;
+		padding: 5px;
+		border-radius: 4px;
+		background-color: lighten($black, 10%);
+
+		&:hover {
+			background-color: lighten($black, 40%);
+		}
+	}
+
+	.arrow {
+		color: $black;
+		cursor: pointer;
+	}
+
+	.arrow:hover {
+		color: lighten($black, 40%);
+	}
+
+	.create {
+		@include display();
+		margin-top: 20px;
+		margin-bottom: 20px;
+	}
+
+	.habits {
+
+		.title {
+			@include display();
+			font-size: 1.2em;
+			margin-bottom: 10px;
+		}
+
+		.habit {
+			@include display();
+			width: 100%;
+			text-align: left;
+			padding: 10px 10px;
+		}
+
+	}
+}
+
+@for $i from 0 through 20 {
+	.color-#{$i} {
+		background-color: hsl(($i*50 % 360), 100%, 80%);
+		transition: 0.4s;
+		cursor: pointer;
+	}
+	.color-#{$i}:hover {
+		background-color: hsl(($i*50 % 360), 100%, 70%);
+	}
+}
+
+.calendar {
+	margin: 0;
+	padding: 0;
+	font-size: 0;
+}
+
+.day {
+	position: relative;
+	width: 14.2857%;
+	height: 20%;
+	font-size: 1rem;
+	display: inline-block;
+	border: 1px solid darken($light-gray, 20%);
+
+	.number {
+		position: absolute;
+		display: inline-block;
+		top: 0;
+		left: 0;
+		width: 20px;
+		height: 20px;
+		background-color: $primary-color;
+		color: $white;
+		text-align: center;
+		font-size: 0.8em;
+		z-index: 25;
+		@include display();
+	}
+
+	.name {
+		position: absolute;
+		display: inline-block;
+		top: 0;
+		right: 10px;
+		font-size: 0.8em;
+		@include display;
+	}
+
+	&.dim {
+		.number {
+			background-color: lighten($black, 60%);
+		}
+	}
+
+	&.today {
+		.number {
+			background-color: hsl(33, 100%, 50%);
+		}
+	}
+
+	&.sixWeeks {
+		height: 16.6666666666666666%;
+	}
+}

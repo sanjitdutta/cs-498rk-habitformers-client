@@ -1,34 +1,21 @@
 <div class="row no-margin full-height">
-	<div class="small-6 column full-height">
-		<div class="row full-height">
-			<div class="small-3 column full-height">
-				Column x
-			</div>
-			<div class="small-3 column full-height">
-				Column x
-			</div>
-			<div class="small-3 column full-height">
-				Column x
-			</div>
-			<div class="small-3 column full-height">
-				Column x
-			</div>
+	<div class="small-2 column full-height sidebar">
+		<div class="month">
+			{{month}}
+		</div>
+		<span class="fa fa-arrow-left arrow" ng-click="prevMonth()"></span>
+		<button class="button today-button" ng-click="currMonth()">Today</button>
+		<span class="fa fa-arrow-right arrow" ng-click="nextMonth()"></span><br />
+		<button class="create button">New Habit</button><br />
+		<div class="habits">
+			<div class="title">My Habits</div>
+			<div class="habit" ng-repeat="habit in habits" ng-class="colorClass($index)">{{habit.name}}</div>
 		</div>
 	</div>
-	<div class="small-6 column full-height">
-		<div class="row full-height">
-			<div class="small-3 column full-height">
-				Column x
-			</div>
-			<div class="small-3 column full-height">
-				Column x
-			</div>
-			<div class="small-3 column full-height">
-				Column x
-			</div>
-			<div class="small-3 column full-height">
-				Column x
-			</div>
+	<div class="small-10 column full-height calendar">
+		<div class="day" ng-repeat="day in days" ng-class="{dim: day.past || day.future, today: day.today, sixWeeks: sixWeeks}">
+			<div class="number">{{day.dayNum}}</div>
+			<div class="name" ng-show="$index < 7">{{day.dayName}}</div>
 		</div>
 	</div>
 </div>
