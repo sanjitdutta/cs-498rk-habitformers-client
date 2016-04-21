@@ -1,7 +1,11 @@
 var hfControllers = angular.module('hfControllers', []);
 
 hfControllers.controller('NavController', ['$scope', 'Database'  , function($scope, Database) {
-  // do stuff
+
+  $scope.user = {
+  	name : 'Test User'
+  };
+
 }]);
 
 hfControllers.controller('MonthlyController', ['$scope', 'Database'  , function($scope, Database) {

@@ -11,3 +11,11 @@ nav {
 		min-width: 100px;
 	}
 }
+
+.display {
+	@include display();
+}
+
+.bigger {
+	font-size: 1.2em;
+}
