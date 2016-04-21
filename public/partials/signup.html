@@ -9,8 +9,8 @@
     <!-- LOGIN FORM -->
     <form action="/signup" method="post">
         <div class="form-group">
-            <label>username</label>
-            <input type="text" class="form-control" name="username">
+            <label>Name</label>
+            <input type="text" class="form-control" name="name">
         </div>
         <div class="form-group">
             <label>Email</label>
@@ -20,13 +20,17 @@
             <label>Password</label>
             <input type="password" class="form-control" name="password">
         </div>
-        <button type="submit">Signup</button>
+        <div class="form-group">
+            <label>Phone Number</label>
+            <input type="tel" class="form-control" name="telephone">
+        </div>
+        <button type="submit" class="button">Signup</button>
     </form>
 
     <hr>
 
-    <p>Already have an account? <a ng-href="#/login">Login</a></p>
-    <p>Or go <a href="#/monthly">home</a>.</p>
+    <p>Already have an account? <a ng-href="#/login" class="button">Login</a></p>
+    <p>Or go <a ng-href="#/landing" class="button">Home</a></p>
 
 </div>
 </div>

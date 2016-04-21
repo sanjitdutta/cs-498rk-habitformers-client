@@ -28,8 +28,8 @@ app.config(['$routeProvider', function($routeProvider) {
     activeTab: 'weekly'
   }).
   when('/landing',{
-      templateUrl: 'partials/landing.html'
-
+      templateUrl: 'partials/landing.html',
+      controller: 'LandingController'
   }).
   when('/signup',{
       templateUrl: 'partials/signup.html'

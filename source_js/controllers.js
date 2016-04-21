@@ -13,6 +13,7 @@ hfControllers.controller('MonthlyController', ['$scope', 'Database', function($s
   // do stuff
 }]);
 
+
 hfControllers.controller('WeeklyController', ['$scope', 'Database', function($scope, Database) {
   // do stuff
 }]);
@@ -27,8 +28,11 @@ hfControllers.controller('LoginController', ['$scope', 'Database', function($sco
 }]);
 
 hfControllers.controller('StatisticsController', ['$scope', 'Database', function($scope, Database) {
-  
 
 
+}]);
+
+
+hfControllers.controller('LandingController', ['$scope', 'Database', function($scope, Database) {
   
 }]);
