@@ -31,3 +31,20 @@ app.config(['$routeProvider', function($routeProvider) {
     redirectTo: '/'
   });
 }]);
+
+// http://stackoverflow.com/questions/14703517/angular-js-set-element-height-on-page-load
+
+app.directive('resize', ['$window', '$route', function ($window, $route) {
+  return function (scope, element) {
+    var w = angular.element($window);
+    var navbarHeight = $('.fixed-nav').outerHeight();
+    var changeHeight = function() {
+      if($route.current.activeTab !== 'monthly') return;
+      element.css('height', (w.height() - navbarHeight) + 'px' );
+    };
+    w.bind('resize', function () {
+      changeHeight();
+    });
+    changeHeight();
+  }
+}]);

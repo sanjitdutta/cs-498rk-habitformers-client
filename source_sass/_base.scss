@@ -10,6 +10,10 @@ nav {
 	.is-dropdown-submenu-parent {
 		min-width: 100px;
 	}
+
+	.active {
+		background-color: darken($light-gray, 10%);
+	}
 }
 
 .fixed-nav {
@@ -26,4 +30,12 @@ nav {
 
 .bigger {
 	font-size: 1.2em;
+}
+
+.full-height {
+	height: 100%;
+}
+
+.no-margin {
+	max-width: 100%;
 }
