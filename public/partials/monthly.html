@@ -13,9 +13,11 @@
 		</div>
 	</div>
 	<div class="small-10 column full-height calendar">
-		<div class="day" ng-repeat="day in days" ng-class="{dim: day.past || day.future, today: day.today, sixWeeks: sixWeeks}">
-			<div class="number">{{day.dayNum}}</div>
-			<div class="name" ng-show="$index < 7">{{day.dayName}}</div>
+		<div class="row">
+			<div class="day" ng-repeat="day in days" ng-class="{dim: day.past || day.future, today: day.today, sixWeeks: sixWeeks}">
+				<div class="number">{{day.dayNum}}</div>
+				<div class="name" ng-show="$index < 7">{{day.dayName}}</div>
+			</div>
 		</div>
 	</div>
 </div>
