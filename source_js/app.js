@@ -2,11 +2,6 @@ var app = angular.module('hf', ['ngRoute', '720kb.datepicker', 'hfControllers', 
 
 app.config(['$routeProvider', function($routeProvider) {
   $routeProvider.
-  when('/', {
-    templateUrl: 'partials/index.html',
-    controller: 'LoginController',
-    activeTab: 'index'
-  }).
   when('/settings', {
     templateUrl: 'partials/settings.html',
     controller: 'SettingsController',
