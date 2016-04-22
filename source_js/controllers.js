@@ -107,7 +107,54 @@ hfControllers.controller('MonthlyController', ['$scope', 'Database', function($s
 
 
 hfControllers.controller('WeeklyController', ['$scope', 'Database', '$routeParams', function($scope, Database, $routeParams) {
-  // do stuff
+	$scope.id = $routeParams.id;
+	$scope.alert = '';
+
+	function displayError(msg) {
+		$scope.alert = msg;
+	}
+
+	// run on controller load
+	(function init() {
+		getDays();
+	})();
+
+	/**
+	 * Returns 7 days of the week and the tasks for those days
+	 */
+	function getDays() {
+		$scope.weekRangeString = "August 20 - 26"
+		$scope.days = [
+			{ 
+				date: 'Aug 20',
+				tasks: []
+			},
+			{ 
+				date: 'Aug 21',
+				tasks: []
+			},
+			{ 
+				date: 'Aug 22',
+				tasks: []
+			},
+			{ 
+				date: 'Aug 23',
+				tasks: []
+			},
+			{ 
+				date: 'Aug 24',
+				tasks: []
+			},
+			{ 
+				date: 'Aug 25',
+				tasks: []
+			},
+			{ 
+				date: 'Aug 26',
+				tasks: []
+			}
+		]
+	}
 }]);
 
 hfControllers.controller('SettingsController', ['$scope', 'Database', function($scope, Database) {
@@ -218,9 +265,7 @@ hfControllers.controller('StatisticsController', ['$scope', 'Database', '$routeP
 				date: 'Aug 26',
 				tasks: []
 			}
-
 		]
-
 	}
 
 
