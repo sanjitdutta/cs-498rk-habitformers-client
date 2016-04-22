@@ -24,7 +24,7 @@
 
 <body ng-app="hf">
 
-	<nav class="top-bar fixed-nav display" ng-controller="NavController">
+	<nav class="top-bar fixed-nav display" ng-controller="NavController" ng-hide="show">
 		<div class="top-bar-left">
 			<ul class="menu">
 				<li class="menu-text bigger">Habit Formers</li>
@@ -46,7 +46,7 @@
 			</ul>
 		</div>
 	</nav>
-    <nav class="top-bar display">
+    <nav class="top-bar display" ng-hide="show">
         <div class="top-bar-left">
             <ul class="dropdown menu" data-dropdown-menu>
                 <li class="menu-text bigger">Habit Formers</li>

@@ -16,7 +16,6 @@ hfControllers.controller('MonthlyController', ['$scope', 'Database', function($s
 	$scope.date = new Date();
 	$scope.month;
 	$scope.sixWeeks = false;
-
 	setMonth();
 
 	$scope.habits = [
@@ -117,6 +116,7 @@ hfControllers.controller('SettingsController', ['$scope', 'Database', function($
 
 hfControllers.controller('LoginController', ['$scope', 'Database', function($scope, Database) {
   // do stuff
+  $scope.show = true;
 }]);
 
 hfControllers.controller('StatisticsController', ['$scope', 'Database', '$routeParams', function($scope, Database, $routeParams) {
@@ -161,9 +161,9 @@ hfControllers.controller('StatisticsController', ['$scope', 'Database', '$routeP
 			{
 				name: "Habit Bronze Badge",
 				description: "Completed 20 habits."
-			}	
+			}
 		];
-	} 
+	}
 
 	/**
 	 * Returns the next badge a person can earn.
@@ -190,31 +190,31 @@ hfControllers.controller('StatisticsController', ['$scope', 'Database', '$routeP
 	function getDays() {
 		$scope.weekRangeString = "August 20 - 26"
 		$scope.days = [
-			{ 
+			{
 				date: 'Aug 20',
 				tasks: []
 			},
-			{ 
+			{
 				date: 'Aug 21',
 				tasks: []
 			},
-			{ 
+			{
 				date: 'Aug 22',
 				tasks: []
 			},
-			{ 
+			{
 				date: 'Aug 23',
 				tasks: []
 			},
-			{ 
+			{
 				date: 'Aug 24',
 				tasks: []
 			},
-			{ 
+			{
 				date: 'Aug 25',
 				tasks: []
 			},
-			{ 
+			{
 				date: 'Aug 26',
 				tasks: []
 			}
@@ -228,5 +228,5 @@ hfControllers.controller('StatisticsController', ['$scope', 'Database', '$routeP
 
 
 hfControllers.controller('LandingController', ['$scope', 'Database', function($scope, Database) {
-  
+
 }]);

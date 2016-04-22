@@ -28,11 +28,11 @@ app.config(['$routeProvider', function($routeProvider) {
     activeTab: 'weekly'
   }).
   when('/landing',{
-      templateUrl: 'partials/landing.html',
-      controller: 'LandingController'
+    templateUrl: 'partials/landing.html',
+    controller: 'LandingController'
   }).
   when('/signup',{
-      templateUrl: 'partials/signup.html'
+    templateUrl: 'partials/signup.html'
 
   }).
   when('/login',{
