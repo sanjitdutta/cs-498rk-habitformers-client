@@ -301,6 +301,7 @@ datepicker {
   border: 1px solid #ccc;
   padding: 15px;
   margin-top: 30px;
+  @include display();
   i{
     font-size: 30px;
     line-height: 50px;
@@ -328,6 +329,7 @@ datepicker {
 
 }
 .login-panel{
+  @include display();
   border-radius: 5px;
   border: 1px solid #ccc;
   padding: 15px;

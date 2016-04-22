@@ -27,12 +27,13 @@ app.config(['$routeProvider', function($routeProvider) {
     controller: 'LandingController'
   }).
   when('/signup',{
-    templateUrl: 'partials/signup.html'
+    templateUrl: 'partials/signup.html',
+    controller: 'SignUpController'
 
   }).
   when('/login',{
-      templateUrl: 'partials/login.html'
-
+      templateUrl: 'partials/login.html',
+      controller: 'LoginController'
   }).
   otherwise({
     redirectTo: '/login'

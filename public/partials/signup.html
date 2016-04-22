@@ -3,7 +3,7 @@
      <div class="signup-panel">
        <p class="welcome"> Welcome to Habit Formers!</p>
 
-       <form class="userForm" novalidate>
+       <form action="#/monthly" class="userForm" novalidate>
          <div class="row collapse">
            <div class="small-12  columns">
              <input type="text" class="form-control" name="name"  ng-model="user.name" placeholder="name" required>
@@ -19,9 +19,10 @@
              <input type="password" class="form-control" ng-model="user.password" name="password" placeholder="password" required>
            </div>
          </div>
+         <button type="submit" class="button">Sign up!</button>
        </form>
        <!-- Need to add user auth -->
-       <a href="#/monthly" class="button ">Sign Up! </a>
+       <!-- <a href="#/monthly" class="button ">Sign Up! </a> -->
         <p>Already have an account? <a href="#/login">Login here &raquo</a></p>
      </div>
    </div>

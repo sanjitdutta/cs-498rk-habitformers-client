@@ -137,7 +137,7 @@ hfControllers.controller('MonthlyController', ['$scope', 'Database', function($s
 					}
 				});
 
-			} else {				
+			} else {
 
 				$scope.days.forEach(function(day, j) {
 					if(new Date(habit.start_date) > new Date(day.date)) return;
@@ -198,31 +198,31 @@ hfControllers.controller('WeeklyController', ['$scope', 'Database', '$routeParam
 	function getDays() {
 		$scope.weekRangeString = "August 20 - 26"
 		$scope.days = [
-			{ 
+			{
 				date: 'Aug 20',
 				tasks: []
 			},
-			{ 
+			{
 				date: 'Aug 21',
 				tasks: []
 			},
-			{ 
+			{
 				date: 'Aug 22',
 				tasks: []
 			},
-			{ 
+			{
 				date: 'Aug 23',
 				tasks: []
 			},
-			{ 
+			{
 				date: 'Aug 24',
 				tasks: []
 			},
-			{ 
+			{
 				date: 'Aug 25',
 				tasks: []
 			},
-			{ 
+			{
 				date: 'Aug 26',
 				tasks: []
 			}
@@ -237,7 +237,13 @@ hfControllers.controller('SettingsController', ['$scope', 'Database', function($
 
 hfControllers.controller('LoginController', ['$scope', 'Database', function($scope, Database) {
   // do stuff
-  $scope.show = true;
+   $scope.addUser = function(user){
+       alert("LOGGIN IN");
+   }
+}]);
+
+hfControllers.controller('SignUpController', ['$scope', 'Database', function($scope, Database) {
+  // do stuff
 }]);
 
 hfControllers.controller('StatisticsController', ['$scope', 'Database', '$routeParams', function($scope, Database, $routeParams) {
