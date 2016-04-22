@@ -34,6 +34,13 @@ hfServices.factory('Database', ['$http', '$window', function($http, $window) {
         return $http.get(baseURL() + "habits");
     }
 
+    database.getHabitsByUser = function(id) {
+        var params = {
+            where : '{"userId" : "' + id + '"}'
+        };
+        return $http.get(baseURL() + "habits", {params : params});
+    }
+
     database.getHabit = function(id) {
         return $http.get(baseURL() + "habits/" + id);
     }

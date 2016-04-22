@@ -13,9 +13,12 @@
 		</div>
 	</div>
 	<div class="small-10 column full-height calendar">
-			<div class="day" ng-repeat="day in days" ng-class="{dim: day.past || day.future, today: day.today, sixWeeks: sixWeeks}">
-				<div class="number">{{day.dayNum}}</div>
-				<div class="name" ng-show="$index < 7">{{day.dayName}}</div>
+		<div class="day" ng-repeat="day in days" ng-class="{dim: day.past || day.future, today: day.today, sixWeeks: sixWeeks}">
+			<div class="number">{{day.dayNum}}</div>
+			<div class="name" ng-show="$index < 7">{{day.dayName}}</div>
+			<div class="calendarHabit" ng-repeat="habit in day.habits" ng-class="colorClass(habit.num)">
+				<span class="fa fa-check" ng-show="habit.completed"></span>
+			</div>
 		</div>
 	</div>
 </div>
