@@ -9,6 +9,11 @@ nav {
 
 	.is-dropdown-submenu-parent {
 		min-width: 100px;
+		text-align: center;
+	}
+
+	.submenu {
+		text-align: left;
 	}
 
 	.active {
@@ -32,6 +37,13 @@ nav {
 	font-size: 1.2em;
 }
 
+.centered {
+	position: relative;
+	top: 50%;
+	left: 50%;
+	transform: translateX(-50%) translateY(-50%);
+}
+
 .full-height {
 	height: 100%;
 }
@@ -39,6 +51,8 @@ nav {
 .no-margin {
 	max-width: 100%;
 }
+
+// Monthly Stuff
 
 .sidebar {
 	border-right: 1px solid darken($light-gray, 20%);
@@ -121,6 +135,7 @@ nav {
 	height: 20%;
 	font-size: 1rem;
 	display: inline-block;
+	box-sizing: border-box;
 	border: 1px solid darken($light-gray, 20%);
 
 	.number {
@@ -154,6 +169,8 @@ nav {
 	}
 
 	&.today {
+		background-color: lighten($light-gray, 5%);
+
 		.number {
 			background-color: hsl(33, 100%, 50%);
 		}
@@ -164,9 +181,34 @@ nav {
 	}
 
 	.calendarHabit {
-		height: 100%;
-		width: 100%;
+		height: 50%;
+		width: 25%;
+		display: inline-block;
 		cursor: pointer;
+		float: left;
+	}
+}
+
+._720kb-datepicker-calendar-body,
+._720kb-datepicker-calendar-days-header,
+._720kb-datepicker-calendar-header,
+._720kb-datepicker-calendar-years-pagination-pages,
+.datepicker,
+[datepicker],
+datepicker {
+	font-family: $body-font-family;
+}
+
+.reveal {
+	.startDate {
+		float: left;
+		width: 45%;
+		font-family: $body-font-family;
+	}
+	.endDate {
+		float: right;
+		width: 45%;
+		font-family: $body-font-family;
 	}
 }
 
