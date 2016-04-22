@@ -186,7 +186,7 @@ nav {
 		position: relative;
 		display: inline-block;
 		width: 14.28%;
-		min-height: 15vh;
+		min-height: 20vh;
 		border: 1px solid darken($light-gray, 20%);
 
 		.statistics-day-task {
@@ -203,6 +203,41 @@ nav {
 
 	#weeklyhabits {
 		margin-top: 5%;
+	}
+}
+
+#weekly {
+	padding: 2% 2% 2% 2%;
+
+	.week-day-block {
+		position: relative;
+		display: inline-block;
+		width: 14.28%;
+		min-height: 20vh;
+		border: 1px solid darken($light-gray, 20%);
+
+		.week-day-task {
+
+		}
+
+		h6 {
+			position: absolute;
+			bottom: 0;
+			left: 50%;
+			transform: translateX(-50%);
+		}
+	}
+
+	.filter-block {
+		display: block;
+
+		input {
+			display: inline-block
+		}
+
+		label {
+			display: inline-block
+		}
 	}
 }
 
