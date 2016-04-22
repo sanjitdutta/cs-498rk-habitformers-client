@@ -25,14 +25,6 @@ hfControllers.controller('MonthlyController', ['$scope', 'Database', function($s
 
 	var days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
 
-	// setMonth();
-
-	/* $scope.habits = [
-		{name: 'Wash my hair'},
-		{name: 'Do the dishes'},
-		{name: 'Do 1,000 pull ups'}
-	]; */
-
 	Database.getUser("57197fbc4f1daf85187fad00").success(function(data) { // need to see how this will be done
 		$scope.user = data.data;
 	})
