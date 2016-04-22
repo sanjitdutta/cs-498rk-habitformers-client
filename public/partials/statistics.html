@@ -1,34 +1,41 @@
-<div>
-    <div class="row">
-        <div class="small-6 medium-6 columns"> <!-- Badges -->
-            <h2>Badges Earned</h2>
-            <div class="row" ng-repeat="badge in badges">
-                <div class="small-6 medium-6 columns"> 
-                    <!-- Badge Icon -->
-                </div>
-                <div class="small-6 medium-6 columns"> 
-                    <h6>{{badge.name}}</h6>
-                </div>
-            </div>            
-            <div id="statistics-next-badge" class="row">
-                <h5>Complete {{nextBadgeCount}} more for:</h5>
-                <!-- Bade icon -->
-                <h6>{{nextBadgeName}}</h6>
+<div id="statistics" class="row no-margin full-height">
+    <div class="small-6 medium-6 columns main-col"> <!-- Badges -->
+        <div class="row">
+            <h2 class="text-center">Badges Earned</h2>   
+            <hr> 
+        </div>
+        <div class="row badge-listing" ng-repeat="badge in badges">
+            <div class="small-6 medium-6 columns text-center"> 
+                <!-- Badge Icon -->
+                <i class="fa fa-trophy fa-3x badge-icon" aria-hidden="true"></i>
             </div>
-        </div> <!-- End Badges -->
-        <div class="small-6 medium-6 columns"> <!-- Stats -->
-            <h2>Weekly Goals <small>{{weekRangeString}}</small></h2>
-            <div class="row">
-                <div class="statisics-day-block" ng-repeat="day in days">
-                    <div class="statistics-day-task" ng-repeat="task in day.tasks">
-                    </div>
-                    <h6>{{day.date}}</h6>
+            <div class="small-6 medium-6 columns"> 
+                <h4>{{badge.name}}</h4>
+                <p>{{badge.description}}</p>
+            </div>
+        </div>            
+        <div id="statistics-next-badge" class="row">
+            <h3 class="text-center">Complete {{nextBadgeCount}} more for:</h3>
+            <!-- Bade icon -->
+            <h4 class="text-center">{{nextBadgeName}}</h4>
+            <p class="text-center">{{nextBadgeDesc}}</p>
+        </div>
+    </div> <!-- End Badges -->
+    <div class="small-6 medium-6 columns"> <!-- Stats -->
+        <div class="row">
+            <h2 class="text-center">Weekly Goals: <small>{{weekRangeString}}</small></h2>
+            <hr>
+        </div>
+        <div class="row">
+            <div class="statisics-day-block" ng-repeat="day in days">
+                <div class="statistics-day-task" ng-repeat="task in day.tasks">
                 </div>
+                <h6>{{day.date}}</h6>
             </div>
-            <div class="row">
-                <h2>Weekly Completed Habits</h2>
-                <div id="completeHabitsChart"></div>
-            </div>
-        </div> <!-- End Stats -->
-    </div>
+        </div>
+        <div class="row">
+            <h3 id="weeklyhabits" class="text-center">Weekly Completed Habits</h3>
+            <div id="completeHabitsChart"></div>
+        </div>
+    </div> <!-- End Stats -->
 </div>

@@ -106,7 +106,7 @@ hfControllers.controller('MonthlyController', ['$scope', 'Database', function($s
 }]);
 
 
-hfControllers.controller('WeeklyController', ['$scope', 'Database', function($scope, Database) {
+hfControllers.controller('WeeklyController', ['$scope', 'Database', '$routeParams', function($scope, Database, $routeParams) {
   // do stuff
 }]);
 
@@ -119,7 +119,109 @@ hfControllers.controller('LoginController', ['$scope', 'Database', function($sco
   // do stuff
 }]);
 
-hfControllers.controller('StatisticsController', ['$scope', 'Database', function($scope, Database) {
+hfControllers.controller('StatisticsController', ['$scope', 'Database', '$routeParams', function($scope, Database, $routeParams) {
+	$scope.id = $routeParams.id;
+	$scope.alert = '';
+
+	function displayError(msg) {
+		$scope.alert = msg;
+	}
+
+
+	// run on controller load
+	(function init() {
+		getEarnedBadges();
+		getNextBadge();
+		getDays();
+	})();
+
+	/**
+	 * Returns a list of badge objects earned by the user.
+	 */
+	function getEarnedBadges() {
+		/* What the real code should look like when the route is created
+		Database.getBadges(id)
+			.success(function(data) {
+				$scope.badges = data.data;
+			})
+			.error(function(data) {
+				displayMessage(data.message);
+			});
+
+		*/
+		$scope.badges = [
+			{
+				name: "Habit Rabbit",
+				description: "Completed 10 habits."
+			},
+			{
+				name: "Big Hands",
+				description: "Completed more than 7 habits in a week."
+			},
+			{
+				name: "Habit Bronze Badge",
+				description: "Completed 20 habits."
+			}	
+		];
+	} 
+
+	/**
+	 * Returns the next badge a person can earn.
+	 */
+	function getNextBadge() {
+		/* What the real code should look like when the route is created
+		Database.getNextBadge(id)
+			.success(function(data) {
+				$scope.nextBadgeName = data.data.name;
+				$scope.nextBadgeCount = data.data.count;
+			})
+			.error(function(data) {
+				displayMessage(data.message);
+			});
+		*/
+		$scope.nextBadgeName = "Habit Silver Badge"
+		$scope.nextBadgeCount = "5";
+		$scope.nextBadgeDesc = "Complete 30 habits.";
+	}
+
+	/**
+	 * Returns 7 days of the week and the tasks for those days
+	 */
+	function getDays() {
+		$scope.weekRangeString = "August 20 - 26"
+		$scope.days = [
+			{ 
+				date: 'Aug 20',
+				tasks: []
+			},
+			{ 
+				date: 'Aug 21',
+				tasks: []
+			},
+			{ 
+				date: 'Aug 22',
+				tasks: []
+			},
+			{ 
+				date: 'Aug 23',
+				tasks: []
+			},
+			{ 
+				date: 'Aug 24',
+				tasks: []
+			},
+			{ 
+				date: 'Aug 25',
+				tasks: []
+			},
+			{ 
+				date: 'Aug 26',
+				tasks: []
+			}
+
+		]
+
+	}
 
 
 }]);
