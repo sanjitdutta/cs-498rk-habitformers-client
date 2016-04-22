@@ -1,87 +1,28 @@
-<!-- <!doctype html> -->
-
-<!-- <div class="row"> -->
-
-<!-- <div class="small-6 columns small-centered"> -->
-
-    <!-- <h1><span class="fa fa-sign-in"></span>Signup</h1> -->
-
-    <!-- LOGIN FORM -->
-    <!-- action="/signup" method="post" -->
-    <!-- <form name="userForm"  novalidate>
-        <div class="form-group">
-            <span>Name</span><span class="required">*</span>
-            <input type="text" class="form-control" name="name"  ng-model="user.name" required>
-            <p ng-show="userForm.name.$invalid" class="help-block">Your name is required.</p>
-        </div>
-        <div class="form-group">
-            <span>Email</span><span class="required">*</span>
-            <input type="email" class="form-control"  name="email"ng-model="user.email" required>
-            <p ng-show="userForm.email.$invalid" class="help-block">Your email is required.</p>
-
-        </div>
-        <div class="form-group">
-            <span>Password</span><span class="required">*</span>
-            <input type="password" class="form-control" ng-model="user.password" name="password" required>
-            <p ng-show="userForm.password.$invalid" class="help-block">A password is required.</p>
-
-        </div>
-        <div class="form-group">
-            <span>Phone Number</span><span class="required">*</span>
-            <input type="tel" class="form-control" ng-model="user.telephone" name="telephone" required>
-            <p ng-show="userForm.telephone.$invalid" class="help-block">Your phone number is required.</p>
-
-        </div>
-        <button type="submit" class="button">Signup</button>
-    </form> -->
-
-
-
-    <!-- <hr>
-
-    <p>Already have an account? <a ng-href="#/login" class="button">Login</a></p>
-    <p>Or go <a ng-href="#/landing" class="button">Home</a></p> -->
-
-<!-- </div>
-</div> -->
-
 <div class="row">
-   <div class="small-6 columns small-centered">
+   <div class="small-4 columns small-centered">
      <div class="signup-panel">
        <p class="welcome"> Welcome to Habit Formers!</p>
 
        <form class="userForm" novalidate>
          <div class="row collapse">
-           <div class="small-2  columns">
-             <span class="prefix"><i class="fi-torso-female"></i></span>
-           </div>
-           <div class="small-10  columns">
+           <div class="small-12  columns">
              <input type="text" class="form-control" name="name"  ng-model="user.name" placeholder="name" required>
-             <!-- <p ng-show="userForm.name.$invalid" class="help-block">Your name is required.</p> -->
            </div>
          </div>
          <div class="row collapse">
-           <div class="small-2 columns">
-             <span class="prefix"><i class="fi-mail"></i></span>
-           </div>
-           <div class="small-10  columns">
+           <div class="small-12  columns">
              <input type="email" class="form-control"  name="email"ng-model="user.email" placeholder="email"required>
-             <!-- <p ng-show="userForm.email.$invalid" class="help-block">Your email is required.</p> -->
            </div>
          </div>
          <div class="row collapse">
-           <div class="small-2 columns ">
-             <span class="prefix"><i class="fi-lock"></i></span>
-           </div>
-           <div class="small-10 columns ">
+           <div class="small-12 columns ">
              <input type="password" class="form-control" ng-model="user.password" name="password" placeholder="password" required>
-             <!-- <p ng-show="userForm.password.$invalid" class="help-block">A password is required.</p> -->
            </div>
          </div>
        </form>
        <!-- Need to add user auth -->
        <a href="#/monthly" class="button ">Sign Up! </a>
-        <p>Already have an account? <a href="#">Login here &raquo</a></p>
+        <p>Already have an account? <a href="#/login">Login here &raquo</a></p>
      </div>
    </div>
 </div>
