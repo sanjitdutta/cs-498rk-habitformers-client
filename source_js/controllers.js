@@ -2,10 +2,15 @@ var hfControllers = angular.module('hfControllers', ['chart.js']);
 
 hfControllers.controller('NavController', ['$scope', 'Database', '$route', function($scope, Database, $route) {
 
-  $scope.user = {
-  	name : 'Test User'
-  };
-  $scope.$route = $route;
+	$scope.user;
+	$scope.$route = $route;
+
+	Database.getUser("57197fbc4f1daf85187fad00").success(function(data) { // need to see how this will be done
+		$scope.user = data.data;
+	})
+	.error(function(data) {
+		toastr.error(data.message);
+	});
 
 }]);
 
@@ -16,13 +21,24 @@ hfControllers.controller('MonthlyController', ['$scope', 'Database', function($s
 	$scope.date = new Date();
 	$scope.month;
 	$scope.sixWeeks = false;
-	setMonth();
+	$scope.user;
 
-	$scope.habits = [
-		{name: 'Wash my hair'},
-		{name: 'Do the dishes'},
-		{name: 'Do 1,000 pull ups'}
-	];
+	var days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+
+	Database.getUser("57197fbc4f1daf85187fad00").success(function(data) { // need to see how this will be done
+		$scope.user = data.data;
+	})
+	.error(function(data) {
+		toastr.error(data.message);
+	});
+
+	Database.getHabitsByUser("57197fbc4f1daf85187fad00").success(function(data) { // need to see how this will be done
+		$scope.habits = data.data;
+		setMonth();
+	})
+	.error(function(data) {
+		toastr.error(data.message);
+	});
 
 	$scope.colorClass = function(index) {
 		return "color-" + index;
@@ -31,8 +47,6 @@ hfControllers.controller('MonthlyController', ['$scope', 'Database', function($s
 	function setMonth() {
 		$scope.month = $scope.date.toLocaleString("en-us", { month: "long" }) + ' ' + $scope.date.getFullYear();
 		$scope.days = [];
-
-		var days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
 
 		var firstDayDate = new Date($scope.date.getTime());
 		firstDayDate.setDate(1);
@@ -45,8 +59,10 @@ hfControllers.controller('MonthlyController', ['$scope', 'Database', function($s
 			currDay = new Date(firstDayDate.getTime());
 			currDay.setTime(firstDayDate.getTime()-((firstDay - i)*24*3600000));
 			$scope.days.push({
+				date: currDay.toString(),
 				dayNum: currDay.getDate(),
 				dayName: days[currDay.getDay()],
+				habits: [],
 				past: true
 			});
 			i++;
@@ -58,14 +74,18 @@ hfControllers.controller('MonthlyController', ['$scope', 'Database', function($s
 				currDay.getMonth() == today.getMonth() &&
 				currDay.getYear() == today.getYear()) {
 				$scope.days.push({
+					date: currDay.toString(),
 					dayNum: currDay.getDate(),
 					dayName: days[currDay.getDay()],
+					habits: [],
 					today: true
 				});
 			} else {
 				$scope.days.push({
+					date: currDay.toString(),
 					dayNum: currDay.getDate(),
-					dayName: days[currDay.getDay()]
+					dayName: days[currDay.getDay()],
+					habits: []
 				});
 			}
 			currDay.setTime(currDay.getTime()+(1*24*3600000));
@@ -73,18 +93,64 @@ hfControllers.controller('MonthlyController', ['$scope', 'Database', function($s
 
 		while($scope.days.length % 7 != 0) {
 			$scope.days.push({
+				date: currDay.toString(),
 				dayNum: currDay.getDate(),
 				dayName: days[currDay.getDay()],
+				habits: [],
 				future: true
 			});
 			currDay.setTime(currDay.getTime()+(1*24*3600000));
 		}
 
-		if(Math.round($scope.days.length / 7) > 5) {
+		if($scope.days.length / 7 > 5) {
 			$scope.sixWeeks = true;
 		} else {
 			$scope.sixWeeks = false;
 		}
+
+		renderHabits();
+	}
+
+	function renderHabits() {
+		$scope.habits.forEach(function(habit, i) {
+
+			if(habit.repeat.option == 0) {
+
+				var habitStartDate = new Date(habit.start_date);
+				var timeIncrement = (((habit.repeat.days[0] - habitStartDate.getDay() + 7) % 7)*24*3600000);
+				habitStartDate.setTime(habitStartDate.getTime() + timeIncrement - 60*60*1000*6);
+
+				$scope.days.forEach(function(day, j) {
+					if(habitStartDate > new Date(day.date)) return;
+					if((new Date(habit.end_date)).setTime((new Date(habit.end_date)).getTime() + 60*60*1000*24) < new Date(day.date)) return;
+					var thisDay = new Date(day.date);
+					if((Math.round((thisDay - habitStartDate)/(1000*60*60*24)) % habit.repeat.interval) == 0) {
+						$scope.days[j].habits.push({num: i, id: habit._id, completed: false});
+					}
+				});
+
+			} else {
+
+				$scope.days.forEach(function(day, j) {
+					if(new Date(habit.start_date) > new Date(day.date)) return;
+					if((new Date(habit.end_date)).setTime((new Date(habit.end_date)).getTime() + 60*60*1000*24) < new Date(day.date)) return;
+					var thisDay = new Date(day.date);
+					habit.repeat.days.forEach(function(day, k) {
+						if(day == thisDay.getDay()) {
+							$scope.days[j].habits.push({num: i, id: habit._id, completed: false});
+						}
+					});
+				});
+
+			}
+
+			habit.complete_days.forEach(function(complete, l) {
+				if(complete.date < $scope.days[0].date) return;
+				if(complete.date > $scope.days[$scope.days.length - 1].date) return;
+
+				// handle putting the checkmark thing
+			});
+		});
 	}
 
 	$scope.prevMonth = function() {
@@ -124,31 +190,31 @@ hfControllers.controller('WeeklyController', ['$scope', 'Database', '$routeParam
 	function getDays() {
 		$scope.weekRangeString = "August 20 - 26"
 		$scope.days = [
-			{ 
+			{
 				date: 'Aug 20',
 				tasks: []
 			},
-			{ 
+			{
 				date: 'Aug 21',
 				tasks: []
 			},
-			{ 
+			{
 				date: 'Aug 22',
 				tasks: []
 			},
-			{ 
+			{
 				date: 'Aug 23',
 				tasks: []
 			},
-			{ 
+			{
 				date: 'Aug 24',
 				tasks: []
 			},
-			{ 
+			{
 				date: 'Aug 25',
 				tasks: []
 			},
-			{ 
+			{
 				date: 'Aug 26',
 				tasks: []
 			}
@@ -163,7 +229,13 @@ hfControllers.controller('SettingsController', ['$scope', 'Database', function($
 
 hfControllers.controller('LoginController', ['$scope', 'Database', function($scope, Database) {
   // do stuff
-  $scope.show = true;
+   $scope.addUser = function(user){
+       alert("LOGGIN IN");
+   }
+}]);
+
+hfControllers.controller('SignUpController', ['$scope', 'Database', function($scope, Database) {
+  // do stuff
 }]);
 
 hfControllers.controller('StatisticsController', ['$scope', 'Database', '$routeParams', function($scope, Database, $routeParams) {

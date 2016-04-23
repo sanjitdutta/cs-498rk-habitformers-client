@@ -6,7 +6,8 @@ hfServices.factory('Database', ['$http', '$window', function($http, $window) {
     var database = {};
 
     function baseURL() {
-        return "http://localhost:4000/api/";
+        // return "http://localhost:4000/api/";
+        return "http://107.170.29.15:4000/api/";
         // return $window.sessionStorage.baseurl;
     }
     
@@ -32,6 +33,13 @@ hfServices.factory('Database', ['$http', '$window', function($http, $window) {
 
     database.getHabits = function() {
         return $http.get(baseURL() + "habits");
+    }
+
+    database.getHabitsByUser = function(id) {
+        var params = {
+            where : '{"userId" : "' + id + '"}'
+        };
+        return $http.get(baseURL() + "habits", {params : params});
     }
 
     database.getHabit = function(id) {

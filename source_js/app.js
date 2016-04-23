@@ -2,11 +2,6 @@ var app = angular.module('hf', ['ngRoute', '720kb.datepicker', 'hfControllers', 
 
 app.config(['$routeProvider', function($routeProvider) {
   $routeProvider.
-  when('/', {
-    templateUrl: 'partials/index.html',
-    controller: 'LoginController',
-    activeTab: 'index'
-  }).
   when('/settings', {
     templateUrl: 'partials/settings.html',
     controller: 'SettingsController',
@@ -32,12 +27,13 @@ app.config(['$routeProvider', function($routeProvider) {
     controller: 'LandingController'
   }).
   when('/signup',{
-    templateUrl: 'partials/signup.html'
+    templateUrl: 'partials/signup.html',
+    controller: 'SignUpController'
 
   }).
   when('/login',{
-      templateUrl: 'partials/login.html'
-
+      templateUrl: 'partials/login.html',
+      controller: 'LoginController'
   }).
   otherwise({
     redirectTo: '/login'
