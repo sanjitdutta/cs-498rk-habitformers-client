@@ -29,13 +29,16 @@
         <div class="row">
             <div class="statisics-day-block" ng-repeat="day in days">
                 <div class="statistics-day-task" ng-repeat="task in day.tasks">
+                    <p>{{task.name}}</p>
                 </div>
                 <h6>{{day.date}}</h6>
             </div>
         </div>
         <div class="row">
             <h3 id="weeklyhabits" class="text-center">Weekly Completed Habits</h3>
-            <div id="completeHabitsChart"></div>
+            <canvas id="pie" class="chart chart-pie"
+              chart-data="data" chart-labels="labels">
+            </canvas> 
         </div>
     </div> <!-- End Stats -->
 </div>

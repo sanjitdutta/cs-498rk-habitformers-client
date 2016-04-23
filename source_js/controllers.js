@@ -1,4 +1,4 @@
-var hfControllers = angular.module('hfControllers', []);
+var hfControllers = angular.module('hfControllers', ['chart.js']);
 
 hfControllers.controller('NavController', ['$scope', 'Database', '$route', function($scope, Database, $route) {
 
@@ -239,7 +239,7 @@ hfControllers.controller('StatisticsController', ['$scope', 'Database', '$routeP
 		$scope.days = [
 			{
 				date: 'Aug 20',
-				tasks: []
+				tasks: [{name: "yo"}, {name: "yo"}, {name: "yo"}]
 			},
 			{
 				date: 'Aug 21',
@@ -268,6 +268,8 @@ hfControllers.controller('StatisticsController', ['$scope', 'Database', '$routeP
 		]
 	}
 
+	$scope.labels = ["Brush my Teeth", "Do 100 pushups", "Write in journal"];
+	$scope.data = [0.3, 0.5, 0.2];
 
 }]);
 

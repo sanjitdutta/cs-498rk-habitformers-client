@@ -190,7 +190,13 @@ nav {
 		border: 1px solid darken($light-gray, 20%);
 
 		.statistics-day-task {
+			position: absolute;
+			top: 0;
 
+			p {
+				margin: 0 0 0 0 !important;
+				padding: 0 0 0 0 !important;
+			}
 		}
 
 		h6 {
@@ -202,7 +208,16 @@ nav {
 	}
 
 	#weeklyhabits {
-		margin-top: 5%;
+		margin-top: 3%;
+	}
+
+	.arc text {
+		font: 10px sans-serif;
+		text-anchor: middle;
+	}
+
+	.arc path {
+		stroke: #fff;
 	}
 }
 
@@ -217,7 +232,16 @@ nav {
 		border: 1px solid darken($light-gray, 20%);
 
 		.week-day-task {
+			border: 1px solid darken($light-gray, 20%);
+			color: red;
 
+			margin: 0;
+			padding: 0;
+
+			p {
+				margin: 0 !important;
+				padding: 0 0 0 0 !important;
+			}
 		}
 
 		h6 {
