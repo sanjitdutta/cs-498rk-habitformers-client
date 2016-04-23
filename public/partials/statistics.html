@@ -15,10 +15,16 @@
             </div>
         </div>            
         <div id="statistics-next-badge" class="row">
-            <h3 class="text-center">Complete {{nextBadgeCount}} more for:</h3>
-            <!-- Bade icon -->
-            <h4 class="text-center">{{nextBadgeName}}</h4>
-            <p class="text-center">{{nextBadgeDesc}}</p>
+            <div class="nextBadgeBox">
+                <h3 class="text-center">Complete {{nextBadgeCount}} more for:</h3>
+                <hr>
+                <!-- Bade icon -->
+                <div class="row">
+                    <i class="fa fa-trophy fa-5x"></i>    
+                </div>
+                <h4 class="text-center">{{nextBadgeName}}</h4>
+                <p class="text-center">{{nextBadgeDesc}}</p>
+            </div>
         </div>
     </div> <!-- End Badges -->
     <div class="small-6 medium-6 columns"> <!-- Stats -->
@@ -26,10 +32,9 @@
             <h2 class="text-center">Weekly Goals: <small>{{weekRangeString}}</small></h2>
             <hr>
         </div>
-        <div class="row">
+        <div class="row" id="week-view">
             <div class="statisics-day-block" ng-repeat="day in days">
                 <div class="statistics-day-task" ng-repeat="task in day.tasks">
-                    <p>{{task.name}}</p>
                 </div>
                 <h6>{{day.date}}</h6>
             </div>

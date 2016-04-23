@@ -228,6 +228,20 @@ datepicker {
 		margin-right: auto;
 	}
 
+	.nextBadgeBox {
+		position: relative;
+		border: 1px solid darken($light-gray, 20%);
+		width: 75%;
+		margin-left: auto;
+		margin-right: auto;
+
+		.row {
+			text-align: center;
+			margin-left: auto;
+			margin-right: auto;
+		}
+	}
+
 	.main-col {
 		min-height: 20vh;
 	}
@@ -240,13 +254,11 @@ datepicker {
 		border: 1px solid darken($light-gray, 20%);
 
 		.statistics-day-task {
-			position: absolute;
-			top: 0;
-
-			p {
-				margin: 0 0 0 0 !important;
-				padding: 0 0 0 0 !important;
-			}
+			width: 100%;
+			background-color: #777;
+			display: block;
+			height: 10px;
+			border: 1px solid darken($light-gray, 20%);
 		}
 
 		h6 {
