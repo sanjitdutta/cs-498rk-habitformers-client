@@ -58,6 +58,14 @@ hfServices.factory('Database', ['$http', '$window', function($http, $window) {
         return $http.delete(baseURL() + "habits/" + habit._id);
     }
 
+    database.getBadges = function(id) {
+        return $http.get(baseURL() + "badges/" + id);
+    }
+
+    database.deleteBadges = function(id) {
+        return $http.delete(baseURL() + "badges/" + id);
+    }
+
     return database;
 
 }]);
