@@ -27,13 +27,13 @@
 
 <body ng-app="hf">
 
-	<nav class="top-bar fixed-nav display" ng-controller="NavController" ng-hide="show">
+	<nav class="top-bar fixed-nav display" ng-controller="NavController" ng-show="show">
 		<div class="top-bar-left">
 			<ul class="menu">
 				<li class="menu-text bigger">Habit Formers</li>
 			</ul>
 		</div>
-		<div class="top-bar-right">
+		<div class="top-bar-right" >
 			<ul class="dropdown menu" data-dropdown-menu>
 				<li><input type="search" placeholder="Search"></li>
 				<li><button type="button" class="button fa fa-3x fa-search"></button></li>
@@ -49,8 +49,8 @@
 			</ul>
 		</div>
 	</nav>
-    <nav class="top-bar display" ng-hide="show">
-        <div class="top-bar-left">
+    <nav class="top-bar display" ng-controller="NavController" ng-show="show">
+        <div class="top-bar-left" >
             <ul class="dropdown menu" data-dropdown-menu>
                 <li class="menu-text bigger">Habit Formers</li>
             </ul>

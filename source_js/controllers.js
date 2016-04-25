@@ -1,10 +1,11 @@
 var hfControllers = angular.module('hfControllers', ['chart.js']);
 
-hfControllers.controller('NavController', ['$scope', 'Database', '$route', function($scope, Database, $route) {
+hfControllers.controller('NavController', ['$scope','$rootScope', 'Database', '$route',function($scope,$rootScope, Database, $route) {
 
 	$scope.user;
 	$scope.$route = $route;
-
+	$rootScope.show = false
+	console.log($scope.show)
 	Database.getUser("57197fbc4f1daf85187fad00").success(function(data) { // need to see how this will be done
 		$scope.user = data.data;
 	})
@@ -14,8 +15,10 @@ hfControllers.controller('NavController', ['$scope', 'Database', '$route', funct
 
 }]);
 
-hfControllers.controller('MonthlyController', ['$scope', 'Database', function($scope, Database) {
+hfControllers.controller('MonthlyController', ['$scope','$rootScope', 'Database',function($scope,$rootScope, Database) {
+	$rootScope.show = true
 
+	$scope.show = true
 	$scope.habits;
 	$scope.days;
 	$scope.date = new Date();
@@ -172,6 +175,8 @@ hfControllers.controller('MonthlyController', ['$scope', 'Database', function($s
 
 
 hfControllers.controller('WeeklyController', ['$scope', 'Database', '$routeParams', function($scope, Database, $routeParams) {
+	$rootScope.show = true
+
 	$scope.id = $routeParams.id;
 	$scope.alert = '';
 
@@ -222,23 +227,25 @@ hfControllers.controller('WeeklyController', ['$scope', 'Database', '$routeParam
 	}
 }]);
 
-hfControllers.controller('SettingsController', ['$scope', 'Database', function($scope, Database) {
-  // do stuff
+hfControllers.controller('SettingsController', ['$scope','$rootScope', 'Database',function($scope,$rootScope, Database) {
+	$rootScope.show = true
+
 }]);
 
 
-hfControllers.controller('LoginController', ['$scope', 'Database', function($scope, Database) {
-  // do stuff
-   $scope.addUser = function(user){
-       alert("LOGGIN IN");
-   }
+hfControllers.controller('LoginController', ['$scope', '$rootScope','Database',function($scope,$rootScope, Database) {
+	$rootScope.show = false
+
 }]);
 
-hfControllers.controller('SignUpController', ['$scope', 'Database', function($scope, Database) {
-  // do stuff
+hfControllers.controller('SignUpController', ['$scope','$rootScope','Database', function($scope,$rootScope, Database) {
+	$rootScope.show = false
+
 }]);
 
-hfControllers.controller('StatisticsController', ['$scope', 'Database', '$routeParams', function($scope, Database, $routeParams) {
+hfControllers.controller('StatisticsController', ['$scope','$rootScope', 'Database', '$routeParams', function($scope, $rootScope,Database, $routeParams) {
+	$rootScope.show = true
+
 	$scope.id = $routeParams.id;
 	$scope.alert = '';
 
@@ -346,6 +353,6 @@ hfControllers.controller('StatisticsController', ['$scope', 'Database', '$routeP
 }]);
 
 
-hfControllers.controller('LandingController', ['$scope', 'Database', function($scope, Database) {
-
+hfControllers.controller('LandingController', ['$scope', '$rootScope','Database',function($scope,$rootScope, Database) {
+	$rootScope.show = false
 }]);
