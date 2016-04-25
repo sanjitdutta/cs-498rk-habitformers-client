@@ -3,7 +3,8 @@
      <div class="signup-panel">
        <p class="welcome"> Welcome to Habit Formers!</p>
 
-       <form action="#/monthly" class="userForm" novalidate>
+        <!-- <form action="/signup" method="post" class="userForm" novalidate> -->
+      <form action="#/monthly" class="userForm" novalidate>
          <div class="row collapse">
            <div class="small-12  columns">
              <input type="text" class="form-control" name="name"  ng-model="user.name" placeholder="name" required>
@@ -17,6 +18,11 @@
          <div class="row collapse">
            <div class="small-12 columns ">
              <input type="password" class="form-control" ng-model="user.password" name="password" placeholder="password" required>
+           </div>
+         </div>
+         <div class="row collapse">
+           <div class="small-12 columns ">
+             <input type="tel" class="form-control" ng-model="user.telephone" name="telephone" placeholder="Phone Number" required>
            </div>
          </div>
          <button type="submit" class="button" id="signup">Sign up!</button>
