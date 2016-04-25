@@ -61,4 +61,3 @@ hfServices.factory('Database', ['$http', '$window', function($http, $window) {
     return database;
 
 }]);
-//http://stackoverflow.com/questions/30738814/navbar-not-hiding-on-ng-hide
