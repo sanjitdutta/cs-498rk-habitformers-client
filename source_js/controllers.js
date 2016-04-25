@@ -378,6 +378,12 @@ hfControllers.controller('MonthlyController', ['$scope','$rootScope', 'Database'
 			$scope.sixWeeks = false;
 		}
 
+		if($scope.days.length / 7 < 5) {
+			$scope.fourWeeks = true;
+		} else {
+			$scope.fourWeeks = false;
+		}
+
 		renderHabits();
 	}
 
