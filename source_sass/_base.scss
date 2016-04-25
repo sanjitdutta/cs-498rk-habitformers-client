@@ -199,17 +199,52 @@ datepicker {
 	font-family: $body-font-family;
 }
 
-.reveal {
-	.startDate {
-		float: left;
-		width: 45%;
-		font-family: $body-font-family;
+.fixFont {
+	font-family: $body-font-family;
+}
+
+.half-left {
+	float: left;
+	width: 47%;
+}
+
+.half-right {
+	float: right;
+	width: 47%;
+}
+
+.clearBoth {
+	clear: both;
+}
+
+.inlineChecks {
+	text-align: center;
+
+	label {
+		display: inline-block;
+
+		input[type='checkbox'] {
+			display: inline-block;
+		}
 	}
-	.endDate {
-		float: right;
-		width: 45%;
-		font-family: $body-font-family;
-	}
+}
+
+.notes {
+	height: 100px;
+}
+
+.revealHabit {
+	max-height: 450px !important;
+	height: auto !important;
+	overflow-y: hidden;
+}
+
+.left {
+	float: left;
+}
+
+.right {
+	float: right;
 }
 
 //Login page
