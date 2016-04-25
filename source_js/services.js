@@ -6,8 +6,8 @@ hfServices.factory('Database', ['$http', '$window', function($http, $window) {
     var database = {};
 
     function baseURL() {
-        // return "http://localhost:4000/api/";
-        return "http://107.170.29.15:4000/api/";
+        return "http://localhost:4000/api/";
+        // return "http://107.170.29.15:4000/api/";
         // return $window.sessionStorage.baseurl;
     }
 
@@ -56,6 +56,14 @@ hfServices.factory('Database', ['$http', '$window', function($http, $window) {
 
     database.deleteHabit = function(habit) {
         return $http.delete(baseURL() + "habits/" + habit._id);
+    }
+
+    database.getBadges = function(id) {
+        return $http.get(baseURL() + "badges/" + id);
+    }
+
+    database.deleteBadges = function(id) {
+        return $http.delete(baseURL() + "badges/" + id);
     }
 
     return database;

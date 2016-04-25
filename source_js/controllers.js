@@ -28,23 +28,191 @@ hfControllers.controller('MonthlyController', ['$scope','$rootScope', 'Database'
 
 	var days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
 
-	Database.getUser("57197fbc4f1daf85187fad00").success(function(data) { // need to see how this will be done
-		$scope.user = data.data;
-	})
-	.error(function(data) {
-		toastr.error(data.message);
-	});
+	getData();
 
-	Database.getHabitsByUser("57197fbc4f1daf85187fad00").success(function(data) { // need to see how this will be done
-		$scope.habits = data.data;
-		setMonth();
-	})
-	.error(function(data) {
-		toastr.error(data.message);
-	});
+	function getData() {
+		Database.getUser("57197fbc4f1daf85187fad00").success(function(data) { // need to see how this will be done
+			$scope.user = data.data;
+			Database.getHabitsByUser("57197fbc4f1daf85187fad00").success(function(data) { // need to see how this will be done
+				$scope.habits = data.data;
+				setMonth();
+			})
+			.error(function(data) {
+				toastr.error(data.message);
+			});
+		})
+		.error(function(data) {
+			toastr.error(data.message);
+		});
+	}
 
 	$scope.colorClass = function(index) {
 		return "color-" + index;
+	}
+
+	$scope.prevMonth = function() {
+		$scope.date.setMonth($scope.date.getMonth() - 1);
+		setMonth();
+	}
+
+	$scope.nextMonth = function() {
+		$scope.date.setMonth($scope.date.getMonth() + 1);
+		setMonth();
+	}
+
+	$scope.currMonth = function() {
+		$scope.date = new Date();
+		setMonth();
+	}
+
+	$scope.clearAddHabitForm = function() {
+		$scope.newStartDate = $scope.newEndDate = $scope.newName =
+			$scope.newRepeat = $scope.newRepeatInterval = $scope.newEnterNum =
+			$scope.newPickDays = $scope.newNotes = "";
+		$scope.newDays = [];
+	}
+
+	$scope.clearAddHabitForm();
+
+	$scope.submitAddHabitForm = function() {
+		if(!$scope.newStartDate) {
+			toastr.error("You must enter a start date");
+			return;
+		}
+		if(!$scope.newEndDate) {
+			toastr.error("You must enter an end date");
+			return;
+		}
+		if(!$scope.newName) {
+			toastr.error("You must enter a name");
+			return;
+		}
+		if(!$scope.newRepeat) {
+			toastr.error("You must select a repeat option");
+			return;
+		}
+		if($scope.newRepeat % 2 == 1 && !$scope.newRepeatInterval) {
+			toastr.error("You must enter a repeat interval");
+			return;
+		}
+		if($scope.newRepeat >= 2 && $scope.newDays.every(function(elem) { return !elem; })) {
+			toastr.error("You must select at least one day");
+			return;
+		}
+
+		if($scope.newRepeat % 2 == 0) $scope.newRepeatInterval = 1;
+
+		var repeat = {};
+
+		if($scope.newRepeat <= 1) {
+			var theDay = (new Date($scope.newStartDate)).getDay();
+			repeat = {
+				option: 0,
+				days: [theDay],
+				interval: $scope.newRepeatInterval
+			};
+		}
+		else {
+			var repeatDays = [];
+			$scope.newDays.forEach(function(elem, i) {
+				if(elem) repeatDays.push(i);
+			});
+			repeat = {
+				option: 1,
+				days: repeatDays,
+				interval: $scope.newRepeatInterval
+			};	
+		}
+
+		var habit = {
+			name: $scope.newName,
+			userId: $scope.user._id,
+			repeat: repeat,
+			start_date: $scope.newStartDate,
+			end_date: $scope.newEndDate,
+			note: $scope.newNotes
+		};
+		Database.addHabit(habit).success(function(data) {
+			toastr.success("Successfully added new habit");
+			getData();
+			$('#newHabit').foundation('close');
+			$scope.clearAddHabitForm();
+		})
+		.error(function(data) {
+			toastr.error(data.message);
+		});
+	}
+
+	$scope.changeCompletionStatus = function(oldHabit, currDay) {
+		var toast = toastr.info('Marking habit progress...', {
+		  timeOut: 0,
+		  extendedTimeOut: 0
+		});
+		Database.getHabit(oldHabit.id).success(function(data) {
+			var habit = data.data;
+			var dayIndex = -1;
+			if(habit.complete_days) {
+				for(var i = 0; i < habit.complete_days.length; i++) {
+					if((new Date(currDay.date)).toDateString() === (new Date(habit.complete_days[i].date)).toDateString()) dayIndex = i;
+				}
+				if(dayIndex > -1) habit.complete_days.splice(dayIndex, 1);
+			}
+			else {
+				habit.complete_days = [];
+			}
+			habit.complete_days.push({date: currDay.date, completed: !(oldHabit.completed)});
+			Database.updateHabit(habit).success(function(habit) {
+				getData();
+				toastr.clear(toast);
+			})
+			.error(function(data){
+				toastr.error(data.message);
+				toastr.clear(toast);
+			});
+		})
+		.error(function(data) {
+			toastr.error(data.message);
+			toastr.clear(toast);
+		});
+	}
+
+	$scope.editHabit = function(habit) {
+		$scope.editStartDate = habit.start_date;
+		$scope.editEndDate = habit.end_date;
+		$scope.editName = habit.name;
+		$scope.editNotes = habit.notes;
+		$scope.editRepeat = 2 * habit.repeat.option + (habit.repeat.interval == 1 ? 0 : 1);
+		$scope.editRepeatInterval = habit.repeat.interval;
+		$scope.editEnterNum = ($scope.editRepeat % 2 == 1);
+		$scope.editPickDays = ($scope.editRepeat >= 2);
+		$scope.editDays = [0,0,0,0,0,0,0];
+		if(habit.repeat.days) {
+			habit.repeat.days.forEach(function(day) {
+				$scope.editDays[day] = true;
+			});
+		}
+
+		$('#editHabit').foundation('open');
+	}
+
+	$scope.clearEditHabitForm = function() {
+		$scope.editStartDate = $scope.editEndDate = $scope.editName =
+				$scope.editRepeat = $scope.editRepeatInterval = $scope.editEnterNum =
+				$scope.editPickDays = $scope.editNotes = "";
+		$scope.editDays = [];
+	}
+
+	$scope.clearEditHabitForm();
+
+	$scope.showRepeatOptions = function() {
+		$scope.newEnterNum = ($scope.newRepeat % 2 == 1);
+		$scope.newPickDays = ($scope.newRepeat >= 2);
+		$scope.editEnterNum = ($scope.editRepeat % 2 == 1);
+		$scope.editPickDays = ($scope.editRepeat >= 2);
+	}
+
+	$scope.submitEditHabitForm = function() {
+		$('#editHabit').foundation('close');
 	}
 
 	function setMonth() {
@@ -148,27 +316,22 @@ hfControllers.controller('MonthlyController', ['$scope','$rootScope', 'Database'
 			}
 
 			habit.complete_days.forEach(function(complete, l) {
-				if(complete.date < $scope.days[0].date) return;
-				if(complete.date > $scope.days[$scope.days.length - 1].date) return;
+				if((new Date(complete.date)) < (new Date($scope.days[0].date))) return;
+				if((new Date(complete.date)) > (new Date($scope.days[$scope.days.length - 1].date))) return;
 
-				// handle putting the checkmark thing
+				var dayIndex = Math.round(((new Date(complete.date)).getTime() - (new Date($scope.days[0].date)).getTime())/(60*60*1000*24));
+				var habitIndex = -1;
+				if($scope.days[dayIndex].habits) {
+					for(var m = 0; m < $scope.days[dayIndex].habits.length; m++) {
+						if(habit._id === $scope.days[dayIndex].habits[m].id) {
+							habitIndex = m;
+						}
+					}
+					if(habitIndex > -1) $scope.days[dayIndex].habits.splice(habitIndex, 1);
+				}
+				$scope.days[dayIndex].habits.push({num: i, id: habit._id, completed: complete.completed});
 			});
 		});
-	}
-
-	$scope.prevMonth = function() {
-		$scope.date.setMonth($scope.date.getMonth() - 1);
-		setMonth();
-	}
-
-	$scope.nextMonth = function() {
-		$scope.date.setMonth($scope.date.getMonth() + 1);
-		setMonth();
-	}
-
-	$scope.currMonth = function() {
-		$scope.date = new Date();
-		setMonth();
 	}
 
 }]);
