@@ -10,7 +10,7 @@ hfServices.factory('Database', ['$http', '$window', function($http, $window) {
         // return "http://107.170.29.15:4000/api/";
         // return $window.sessionStorage.baseurl;
     }
-    
+
     database.getUsers = function() {
         return $http.get(baseURL() + "users");
     }
@@ -58,6 +58,15 @@ hfServices.factory('Database', ['$http', '$window', function($http, $window) {
         return $http.delete(baseURL() + "habits/" + habit._id);
     }
 
+    database.getBadges = function(id) {
+        return $http.get(baseURL() + "badges/" + id);
+    }
+
+    database.deleteBadges = function(id) {
+        return $http.delete(baseURL() + "badges/" + id);
+    }
+
     return database;
 
 }]);
+//http://stackoverflow.com/questions/30738814/navbar-not-hiding-on-ng-hide
