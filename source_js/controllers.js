@@ -4,8 +4,8 @@ hfControllers.controller('NavController', ['$scope','$rootScope', 'Database', '$
 
 	$scope.user;
 	$scope.$route = $route;
-	$rootScope.show = false
-	console.log($scope.show)
+	$rootScope.show = false;
+	// console.log($scope.show);
 	Database.getUser("57197fbc4f1daf85187fad00").success(function(data) { // need to see how this will be done
 		$scope.user = data.data;
 	})
@@ -15,10 +15,11 @@ hfControllers.controller('NavController', ['$scope','$rootScope', 'Database', '$
 
 }]);
 
-hfControllers.controller('MonthlyController', ['$scope','$rootScope', 'Database',function($scope,$rootScope, Database) {
-	$rootScope.show = true
+hfControllers.controller('MonthlyController', ['$scope','$rootScope', 'Database', '$timeout', function($scope, $rootScope, Database, $timeout) {
 
-	$scope.show = true
+	$rootScope.show = true;
+
+	$scope.show = true;
 	$scope.habits;
 	$scope.days;
 	$scope.date = new Date();
@@ -46,8 +47,10 @@ hfControllers.controller('MonthlyController', ['$scope','$rootScope', 'Database'
 		});
 	}
 
-	$scope.colorClass = function(index) {
-		return "color-" + index;
+	$scope.colorClass = function(index, day) {
+		var thisDay = "";
+		if(day) thisDay = (new Date((new Date(day.date)).toDateString()));
+		return "color-" + index + (thisDay && thisDay > Date.now() ? " no-pointer" : "");
 	}
 
 	$scope.prevMonth = function() {
@@ -83,11 +86,15 @@ hfControllers.controller('MonthlyController', ['$scope','$rootScope', 'Database'
 			toastr.error("You must enter an end date");
 			return;
 		}
+		if((new Date($scope.newStartDate)) > (new Date($scope.newEndDate))) {
+			toastr.error("The start date should be before the end date");
+			return;	
+		}
 		if(!$scope.newName) {
 			toastr.error("You must enter a name");
 			return;
 		}
-		if(!$scope.newRepeat) {
+		if($scope.newRepeat === "") {
 			toastr.error("You must select a repeat option");
 			return;
 		}
@@ -144,6 +151,8 @@ hfControllers.controller('MonthlyController', ['$scope','$rootScope', 'Database'
 	}
 
 	$scope.changeCompletionStatus = function(oldHabit, currDay) {
+		var thisDay = (new Date((new Date(currDay.date)).toDateString()));
+		if(thisDay > Date.now()) return;
 		var toast = toastr.info('Marking habit progress...', {
 		  timeOut: 0,
 		  extendedTimeOut: 0
@@ -177,6 +186,7 @@ hfControllers.controller('MonthlyController', ['$scope','$rootScope', 'Database'
 	}
 
 	$scope.editHabit = function(habit) {
+		$scope.editHabitID = habit._id;
 		$scope.editStartDate = habit.start_date;
 		$scope.editEndDate = habit.end_date;
 		$scope.editName = habit.name;
@@ -198,7 +208,7 @@ hfControllers.controller('MonthlyController', ['$scope','$rootScope', 'Database'
 	$scope.clearEditHabitForm = function() {
 		$scope.editStartDate = $scope.editEndDate = $scope.editName =
 				$scope.editRepeat = $scope.editRepeatInterval = $scope.editEnterNum =
-				$scope.editPickDays = $scope.editNotes = "";
+				$scope.editPickDays = $scope.editNotes = $scope.editHabitID = "";
 		$scope.editDays = [];
 	}
 
@@ -212,7 +222,96 @@ hfControllers.controller('MonthlyController', ['$scope','$rootScope', 'Database'
 	}
 
 	$scope.submitEditHabitForm = function() {
-		$('#editHabit').foundation('close');
+		if(!$scope.editStartDate) {
+			toastr.error("You must enter a start date");
+			return;
+		}
+		if(!$scope.editEndDate) {
+			toastr.error("You must enter an end date");
+			return;
+		}
+		if((new Date($scope.editStartDate)) > (new Date($scope.editEndDate))) {
+			toastr.error("The start date should be before the end date");
+			return;	
+		}
+		if(!$scope.editName) {
+			toastr.error("You must enter a name");
+			return;
+		}
+		if($scope.editRepeat === "") {
+			toastr.error("You must select a repeat option");
+			return;
+		}
+		if($scope.editRepeat % 2 == 1 && !$scope.editRepeatInterval) {
+			toastr.error("You must enter a repeat interval");
+			return;
+		}
+		if($scope.editRepeat >= 2 && $scope.editDays.every(function(elem) { return !elem; })) {
+			toastr.error("You must select at least one day");
+			return;
+		}
+
+		if($scope.editRepeat % 2 == 0) $scope.editRepeatInterval = 1;
+
+		var repeat = {};
+
+		if($scope.editRepeat <= 1) {
+			var theDay = (new Date($scope.editStartDate)).getDay();
+			repeat = {
+				option: 0,
+				days: [theDay],
+				interval: $scope.editRepeatInterval
+			};
+		}
+		else {
+			var repeatDays = [];
+			$scope.editDays.forEach(function(elem, i) {
+				if(elem) repeatDays.push(i);
+			});
+			repeat = {
+				option: 1,
+				days: repeatDays,
+				interval: $scope.editRepeatInterval
+			};	
+		}
+
+		Database.getHabit($scope.editHabitID).success(function(data) {
+			if(!data.data) return;
+			var updatedHabit = data.data;
+
+			updatedHabit.name = $scope.editName;
+			updatedHabit.userId = $scope.user._id;
+			updatedHabit.repeat = repeat;
+			updatedHabit.start_date = $scope.editStartDate;
+			updatedHabit.end_date = $scope.editEndDate;
+			updatedHabit.note = $scope.editNotes;
+
+			Database.updateHabit(updatedHabit).success(function(data) {
+				toastr.success("Successfully updated habit");
+				getData();
+				$('#editHabit').foundation('close');
+				$scope.clearEditHabitForm();
+			})
+			.error(function(data) {
+				toastr.error(data.message);
+			});
+		})
+		.error(function(data) {
+			toastr.error(data.message);
+		});
+	}
+
+	$scope.deleteHabit = function() {
+		console.log($scope.editHabitID);
+		Database.deleteHabit($scope.editHabitID).success(function(data) {
+			toastr.success('Habit successfully deleted');
+			getData();
+			$('#editHabit').foundation('close');
+			$scope.clearEditHabitForm();
+		})
+		.error(function(data) {
+			toastr.error(data.message);
+		})
 	}
 
 	function setMonth() {
@@ -289,26 +388,26 @@ hfControllers.controller('MonthlyController', ['$scope','$rootScope', 'Database'
 
 				var habitStartDate = new Date(habit.start_date);
 				var timeIncrement = (((habit.repeat.days[0] - habitStartDate.getDay() + 7) % 7)*24*3600000);
-				habitStartDate.setTime(habitStartDate.getTime() + timeIncrement - 60*60*1000*6);
+				habitStartDate.setTime(habitStartDate.getTime() + timeIncrement);
 
 				$scope.days.forEach(function(day, j) {
-					if(habitStartDate > new Date(day.date)) return;
-					if((new Date(habit.end_date)).setTime((new Date(habit.end_date)).getTime() + 60*60*1000*24) < new Date(day.date)) return;
-					var thisDay = new Date(day.date);
+					var thisDay = (new Date((new Date(day.date)).toDateString()));
+					if(habitStartDate > thisDay) return;
+					if((new Date(habit.end_date)) < thisDay) return;
 					if((Math.round((thisDay - habitStartDate)/(1000*60*60*24)) % habit.repeat.interval) == 0) {
-						$scope.days[j].habits.push({num: i, id: habit._id, completed: false});
+						$scope.days[j].habits.push({name: habit.name, num: i, id: habit._id, completed: false});
 					}
 				});
 
 			} else {
 
 				$scope.days.forEach(function(day, j) {
-					if(new Date(habit.start_date) > new Date(day.date)) return;
-					if((new Date(habit.end_date)).setTime((new Date(habit.end_date)).getTime() + 60*60*1000*24) < new Date(day.date)) return;
-					var thisDay = new Date(day.date);
+					var thisDay = (new Date((new Date(day.date)).toDateString()));
+					if(new Date(habit.start_date) > thisDay) return;
+					if((new Date(habit.end_date)) < thisDay) return;
 					habit.repeat.days.forEach(function(day, k) {
 						if(day == thisDay.getDay()) {
-							$scope.days[j].habits.push({num: i, id: habit._id, completed: false});
+							$scope.days[j].habits.push({name: habit.name, num: i, id: habit._id, completed: false});
 						}
 					});
 				});
@@ -329,7 +428,50 @@ hfControllers.controller('MonthlyController', ['$scope','$rootScope', 'Database'
 					}
 					if(habitIndex > -1) $scope.days[dayIndex].habits.splice(habitIndex, 1);
 				}
-				$scope.days[dayIndex].habits.push({num: i, id: habit._id, completed: complete.completed});
+				$scope.days[dayIndex].habits.push({name: habit.name, num: i, id: habit._id, completed: complete.completed});
+			});
+		});
+
+		// fix sizing of habits
+
+		$timeout(function() {
+			console.log($('.day').length);
+			$('.day').each(function(index, item) {
+				var numChildren = $(this).children('.calendarHabit').length;
+				switch(numChildren) {
+					case 6:
+						$(this).children('.calendarHabit').width("33.3333333333333%");
+						$(this).children('.calendarHabit').height("50%");
+						break;
+
+					case 5:
+					case 7:
+					case 8:
+						$(this).children('.calendarHabit').width("25%");
+						$(this).children('.calendarHabit').height("50%");
+						break;
+
+					case 4:
+						$(this).children('.calendarHabit').width("50%");
+						$(this).children('.calendarHabit').height("50%");
+						break;
+
+					case 1:
+					case 2:
+					case 3:
+						$(this).children('.calendarHabit').width((100 / numChildren) + "%");
+						$(this).children('.calendarHabit').height("100%");
+						break;
+
+					case 1:
+						$(this).children('.calendarHabit').width("100%");
+						$(this).children('.calendarHabit').height("100%");
+						break;
+
+					case 0:
+					default:
+						break;
+				}
 			});
 		});
 	}

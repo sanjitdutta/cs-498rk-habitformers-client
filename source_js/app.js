@@ -45,7 +45,8 @@ app.config(['$routeProvider', function($routeProvider) {
 app.directive('resize', ['$window', '$route', function ($window, $route) {
   return function (scope, element) {
     var w = angular.element($window);
-    var navbarHeight = $('.fixed-nav').outerHeight();
+    // var navbarHeight = $('.fixed-nav').height();
+    var navbarHeight = 57;
     var changeHeight = function() {
       if($route.current.activeTab !== 'monthly') return;
       element.css('height', (w.height() - navbarHeight) + 'px' );
