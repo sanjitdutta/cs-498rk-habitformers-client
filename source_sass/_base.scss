@@ -373,6 +373,7 @@ datepicker {
 
 //----------------------------------------------------------
 .signup-panel{
+  background-color: darken($light-gray, 10%);
   border-radius: 5px;
   border: 1px solid #ccc;
   padding: 15px;
@@ -405,6 +406,7 @@ datepicker {
 
 }
 .login-panel{
+  background-color: darken($light-gray, 10%);
   @include display();
   border-radius: 5px;
   border: 1px solid #ccc;
