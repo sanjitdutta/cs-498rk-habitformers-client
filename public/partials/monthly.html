@@ -16,8 +16,8 @@
 		<div class="day" ng-repeat="day in days" ng-class="{dim: day.past || day.future, today: day.today, sixWeeks: sixWeeks}">
 			<div class="number">{{day.dayNum}}</div>
 			<div class="name" ng-show="$index < 7">{{day.dayName}}</div>
-			<div class="calendarHabit" ng-repeat="habit in day.habits" ng-class="colorClass(habit.num)" ng-click="changeCompletionStatus(habit, day)">
-				<div class="fa fa-check fa-2x centered" ng-show="habit.completed"></div>
+			<div class="calendarHabit" ng-repeat="habit in day.habits" ng-class="colorClass(habit.num, day)" ng-click="changeCompletionStatus(habit, day)" ng-attr-title="{{habit.name}}">
+				<div class="fa fa-check centered" ng-show="habit.completed"></div>
 			</div>
 		</div>
 	</div>
@@ -47,32 +47,25 @@
 	<div class="clearBoth"></div>
 	<div ng-show="newPickDays" class="inlineChecks">
 		<label>
-			<input type="checkbox" ng-model="newDays[0]">
-			S
+			<input type="checkbox" ng-model="newDays[0]">S&nbsp;&nbsp;
 		</label>
 		<label>
-			<input type="checkbox" ng-model="newDays[1]">
-			M
+			<input type="checkbox" ng-model="newDays[1]">M&nbsp;&nbsp;
 		</label>
 		<label>
-			<input type="checkbox" ng-model="newDays[2]">
-			T
+			<input type="checkbox" ng-model="newDays[2]">T&nbsp;&nbsp;
 		</label>
 		<label>
-			<input type="checkbox" ng-model="newDays[3]">
-			W
+			<input type="checkbox" ng-model="newDays[3]">W&nbsp;&nbsp;
 		</label>
 		<label>
-			<input type="checkbox" ng-model="newDays[4]">
-			R
+			<input type="checkbox" ng-model="newDays[4]">R&nbsp;&nbsp;
 		</label>
 		<label>
-			<input type="checkbox" ng-model="newDays[5]">
-			F
+			<input type="checkbox" ng-model="newDays[5]">F&nbsp;&nbsp;
 		</label>
 		<label>
-			<input type="checkbox" ng-model="newDays[6]">
-			S
+			<input type="checkbox" ng-model="newDays[6]">S
 		</label>
 	</div>
 	<textarea class="notes" ng-model="newNotes" placeholder="Notes"></textarea>
@@ -104,37 +97,33 @@
 	<div class="clearBoth"></div>
 	<div ng-show="editPickDays" class="inlineChecks">
 		<label>
-			<input type="checkbox" ng-model="editDays[0]">
-			S
+			<input type="checkbox" ng-model="editDays[0]">S&nbsp;&nbsp;
 		</label>
 		<label>
-			<input type="checkbox" ng-model="editDays[1]">
-			M
+			<input type="checkbox" ng-model="editDays[1]">M&nbsp;&nbsp;
 		</label>
 		<label>
-			<input type="checkbox" ng-model="editDays[2]">
-			T
+			<input type="checkbox" ng-model="editDays[2]">T&nbsp;&nbsp;
 		</label>
 		<label>
-			<input type="checkbox" ng-model="editDays[3]">
-			W
+			<input type="checkbox" ng-model="editDays[3]">W&nbsp;&nbsp;
 		</label>
 		<label>
-			<input type="checkbox" ng-model="editDays[4]">
-			R
+			<input type="checkbox" ng-model="editDays[4]">R&nbsp;&nbsp;
 		</label>
 		<label>
-			<input type="checkbox" ng-model="editDays[5]">
-			F
+			<input type="checkbox" ng-model="editDays[5]">F&nbsp;&nbsp;
 		</label>
 		<label>
-			<input type="checkbox" ng-model="editDays[6]">
-			S
+			<input type="checkbox" ng-model="editDays[6]">S&nbsp;&nbsp;
 		</label>
 	</div>
 	<textarea class="notes" ng-model="editNotes" placeholder="Notes"></textarea>
-	<button class="button secondary left" data-close ng-click="clearEditHabitForm()">Cancel</button>
-	<button class="button success right" ng-click="submitEditHabitForm()">Submit</button>
+	<div class="text-center">
+		<button class="button secondary left" data-close ng-click="clearEditHabitForm()">Cancel</button>
+		<button class="button success right" ng-click="submitEditHabitForm()">Submit</button>
+		<button class="button alert" ng-click="deleteHabit()">Delete</button>
+	</div>
 </div>
 
 <script>

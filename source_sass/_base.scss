@@ -55,7 +55,7 @@ nav {
 // Monthly Stuff
 
 .sidebar {
-	border-right: 1px solid darken($light-gray, 20%);
+	border-right: 1px solid darken($light-gray, 40%);
 	height: 100%;
 	overflow: auto;
 	text-align: center;
@@ -114,9 +114,15 @@ nav {
 
 @for $i from 0 through 20 {
 	.color-#{$i} {
-		background-color: hsl(($i*50 % 360), 100%, 80%);
+		background-color: hsl(($i*50 % 360), 100%, 85%);
 		transition: 0.4s;
 		cursor: pointer;
+	}
+	.no-pointer.color-#{$i}:hover {
+		background-color: hsl(($i*50 % 360), 100%, 85%);
+	}
+	.no-pointer.color-#{$i} {
+		cursor: default;
 	}
 	.color-#{$i}:hover {
 		background-color: hsl(($i*50 % 360), 100%, 70%);
@@ -131,12 +137,12 @@ nav {
 
 .day {
 	position: relative;
-	width: 14.2857%;
+	width: 14.285714285714285714285714285714%;
 	height: 20%;
 	font-size: 1rem;
 	display: inline-block;
 	box-sizing: border-box;
-	border: 1px solid darken($light-gray, 20%);
+	border: 1px solid darken($light-gray, 40%);
 
 	.number {
 		position: absolute;
@@ -177,14 +183,13 @@ nav {
 	}
 
 	&.sixWeeks {
-		height: 16.6666666666666666%;
+		height: 16.666666666666666666666666666667%;
 	}
 
 	.calendarHabit {
 		height: 50%;
 		width: 25%;
 		display: inline-block;
-		cursor: pointer;
 		float: left;
 	}
 }
